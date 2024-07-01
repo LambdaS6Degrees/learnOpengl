@@ -7,6 +7,10 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
 
+#define say(x) std::cout<<x<<std::endl
+#define intro(x) std::cout<<#x<<"="<<x<<std::endl
+int screen_width = 2560;
+int screen_height = 1440;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
@@ -32,10 +36,10 @@ void processInput(GLFWwindow* window)
 float yaw = -90;
 float pitch = 0;
 bool firstMouse = true;
+float lastX = 0, lastY = 0;
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-
-    float lastX = 400, lastY = 300;
+    //std::cout << xpos << "," << ypos << std::endl;
     if (firstMouse) // initially set to true
     {
         lastX = xpos;
@@ -47,7 +51,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    const float sensitivity = 0.01f;
+    const float sensitivity = 0.05f;
     xoffset *= sensitivity;
     yoffset *= sensitivity;
 
@@ -84,7 +88,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(screen_width, screen_height, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -98,7 +102,7 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, screen_width, screen_height);
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
