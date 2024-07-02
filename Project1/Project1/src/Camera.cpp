@@ -2,13 +2,14 @@
 
 Camera::Camera(const glm::vec3& iPos, const glm::vec3& iFront, const glm::vec3& iUp):Position(iPos),
 Front(iFront),
+Up(iUp),
 Pitch(0.0f),
 Yaw(-90.0f),
 Zoom(45.0f),
 MovementSpeed(2.5f),
-MouseSensitivity(0.5f)
+MouseSensitivity(0.1f)
 {
-
+    Right = glm::cross(Front, Up);
 }
 
 void Camera::ProcessKeyboardInput(Camera_Movement direction, float deltaTime)
@@ -66,4 +67,5 @@ void Camera::UpdateCameraFront()
     front.y = sin(glm::radians(Pitch));
     front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
     Front = glm::normalize(front);
+    Right = glm::cross(Front, Up);
 }
